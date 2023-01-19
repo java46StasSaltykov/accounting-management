@@ -2,7 +2,6 @@ package telran.accounting.security;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.*;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.User;
@@ -15,37 +14,32 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration {
+	@Value("${app.admin.username:admin}")
+	private String admin;
+	@Value("${app.admin.password:${ADMIN_PASSWORD}}")
+	private String adminPassword;
 
-	String admin = "admin@gmail.com";
-	@Value("${app.password.admin:${ADMIN_PASSWORD}}")
-	String adminPassword;
-	
 	@Bean
 	SecurityFilterChain configure(HttpSecurity http) throws Exception {
 		http
 		.csrf()
 		.disable()
-		.authorizeHttpRequests(requests -> 
-			requests
-			.requestMatchers(HttpMethod.GET)
-			.hasAnyRole("USER", "ADMIN")
-			.anyRequest().hasRole("ADMIN"))
-			.httpBasic();
-		return http.build();	
+		.authorizeHttpRequests(requests -> requests.anyRequest().authenticated())
+		.httpBasic();
+		return http.build();
+
 	}
-	
-	@Bean 
+
+	@Bean
 	PasswordEncoder getPasswordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
 
-    @Bean
-    UserDetailsManager userDetailsManager(PasswordEncoder bCryptPasswordEncoder) {
-	    InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager(); 
-	    manager.createUser(User.withUsername(admin)
-	  	      .password(bCryptPasswordEncoder.encode(adminPassword))
-	  	      .roles("ADMIN")
-	  	      .build()); 
-	    return manager;
-    }
+	@Bean
+	public UserDetailsManager userDetailsService(PasswordEncoder bCryptPasswordEncoder) {
+		InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
+		manager.createUser(User.withUsername(admin).password(bCryptPasswordEncoder.encode(adminPassword)).roles("ADMIN").build());
+		return manager;
+	}
+
 }

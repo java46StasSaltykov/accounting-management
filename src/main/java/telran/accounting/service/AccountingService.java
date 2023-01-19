@@ -1,15 +1,14 @@
 package telran.accounting.service;
 
-import telran.accounting.dto.Account;
+import telran.accounting.model.Account;
 
 public interface AccountingService {
 	
-	String addAccount(Account account);
-	
-	String deleteAccount(String username);
-	
-	String updateAccount(Account account);
-	
-	boolean isExist(String username);
+	boolean addAccount(Account account);
 
+	boolean deleteAccount(String username);
+
+	boolean updateAccount(Account account);
+
+	boolean isExists(String username);
 }
