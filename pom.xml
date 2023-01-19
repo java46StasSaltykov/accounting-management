@@ -12,7 +12,7 @@
 	<artifactId>accounting-management</artifactId>
 	<version>0.0.1</version>
 	<name>accounting-management</name>
-	<description>building accounting management web service</description>
+	<description>getting started Spring architecture</description>
 	<properties>
 		<java.version>17</java.version>
 	</properties>
