@@ -1,4 +1,4 @@
-package telran.accounting.appl;
+package telran.spring.accounting;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

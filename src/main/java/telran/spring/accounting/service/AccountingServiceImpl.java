@@ -1,16 +1,17 @@
-package telran.accounting.service;
+package telran.spring.accounting.service;
 
-import java.io.*;
-import java.util.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.util.HashMap;
+import org.slf4j.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.stereotype.Service;
-import jakarta.annotation.*;
-import telran.accounting.model.Account;
+import jakarta.annotation.PostConstruct;
+import jakarta.annotation.PreDestroy;
+import java.io.*;
+import telran.spring.accounting.model.Account;
+
 
 @Service
 public class AccountingServiceImpl implements AccountingService {
@@ -23,11 +24,6 @@ public class AccountingServiceImpl implements AccountingService {
 	private HashMap<String, Account> accounts;
 	@Value("${app.file.name:accounts.data}")
 	private String fileName;
-	
-	public AccountingServiceImpl(PasswordEncoder passwordEncoder, UserDetailsManager userDetailsManager) {
-		this.passwordEncoder = passwordEncoder;
-		this.userDetailsManager = userDetailsManager;
-	}
 
 	@Override
 	public boolean addAccount(Account account) {
@@ -69,6 +65,11 @@ public class AccountingServiceImpl implements AccountingService {
 	@Override
 	public boolean isExists(String username) {
 		return accounts.containsKey(username);
+	}
+
+	public AccountingServiceImpl(PasswordEncoder passwordEncoder, UserDetailsManager userDetailsManager) {
+		this.passwordEncoder = passwordEncoder;
+		this.userDetailsManager = userDetailsManager;
 	}
 
 	@PreDestroy

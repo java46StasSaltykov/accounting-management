@@ -1,6 +1,6 @@
-package telran.accounting.service;
+package telran.spring.accounting.service;
 
-import telran.accounting.model.Account;
+import telran.spring.accounting.model.Account;
 
 public interface AccountingService {
 	
