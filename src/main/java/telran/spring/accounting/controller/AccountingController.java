@@ -2,6 +2,7 @@ package telran.spring.accounting.controller;
 
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import telran.spring.accounting.model.Account;
@@ -9,11 +10,10 @@ import telran.spring.accounting.service.AccountingService;
 
 @RestController
 @RequestMapping("accounts")
-@Validated // required annotation for additional validation of parameters
+@Validated //required annotation for additional validation of parameters
 public class AccountingController {
 
 	AccountingService accountingService;
-
 	@PostMapping
 	String addAccount(@RequestBody @Valid Account account) {
 		String res = String.format("account with username %s already exists", account.username);
@@ -22,7 +22,6 @@ public class AccountingController {
 		}
 		return res;
 	}
-
 	@DeleteMapping("/{username}")
 	String deleteAccount(@PathVariable @Email String username) {
 		String res = String.format("account with username %s doesn't exist", username);
@@ -31,7 +30,6 @@ public class AccountingController {
 		}
 		return res;
 	}
-
 	@PutMapping
 	String updateAccount(@RequestBody @Valid Account account) {
 		String res = String.format("account with username %s doesn't exist", account.username);
@@ -40,7 +38,6 @@ public class AccountingController {
 		}
 		return res;
 	}
-
 	@GetMapping("/{username}")
 	String hasAccount(@PathVariable @Email String username) {
 		String res = String.format("account with username %s doesn't exist", username);
@@ -49,7 +46,6 @@ public class AccountingController {
 		}
 		return res;
 	}
-
 	public AccountingController(AccountingService accountingService) {
 		this.accountingService = accountingService;
 	}
