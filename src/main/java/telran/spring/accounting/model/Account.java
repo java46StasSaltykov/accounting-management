@@ -1,17 +1,18 @@
 package telran.spring.accounting.model;
 
-
 import java.io.Serializable;
-
 import jakarta.validation.constraints.*;
 
-public class Account implements Serializable{
-	
+public class Account implements Serializable {
+
 	private static final long serialVersionUID = 1L;
-	@NotEmpty @Email
+	@NotEmpty
+	@Email
 	public String username;
-	 @Size(min = 6) @NotEmpty
+	@Size(min = 6, message = "password must have length not less than 6")
+	@NotEmpty
 	public String password;
-	@NotEmpty 
+	@NotEmpty
 	public String role;
+	
 }
