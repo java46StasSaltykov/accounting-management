@@ -140,7 +140,6 @@ public class AccountingServiceImpl implements AccountingService {
 	@Override
 	@Transactional(readOnly = true)
 	public int getActiveMinRolesOccurrenceCount() {
-		// TODO Auto-generated method stub
 		return accounts.getActiveMinRolesOccurrenceCount(LocalDateTime.now(ZoneId.of("UTC")));
 	}
 }
